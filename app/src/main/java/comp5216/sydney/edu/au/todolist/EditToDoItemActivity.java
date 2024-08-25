@@ -1,13 +1,18 @@
 package comp5216.sydney.edu.au.todolist;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class EditToDoItemActivity extends Activity
+
+public class EditToDoItemActivity extends AppCompatActivity
 {
 	public int position=0;
 	EditText etItem;
@@ -41,5 +46,27 @@ public class EditToDoItemActivity extends Activity
 		// Activity finishes OK, return the data
 		setResult(RESULT_OK, data); // Set result code and bundle data for response
 		finish(); // Close the activity, pass data to parent
-	} 
+	}
+
+	public void onCancel(View v){
+		//Log.i("EditActivity", "Cancel item " + position);
+		AlertDialog.Builder builder = new AlertDialog.Builder(EditToDoItemActivity.this);
+		builder.setTitle(R.string.dialog_cancel_title)
+				.setMessage(R.string.dialog_cancel_msg)
+				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialogInterface, int i) {
+						finish();
+					}
+				})
+				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialogInterface, int i) {
+						// User cancelled the dialog
+						// Nothing happens
+
+					}
+				});
+
+		builder.create().show();
+
+	}
 }

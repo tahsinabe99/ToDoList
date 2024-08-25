@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -69,15 +70,21 @@ public class MainActivity extends AppCompatActivity {
         setupListViewListener();
     }
 
-    public void onAddItemClick(View view) {
+    public void onAddItemClick( View view) {
+
+        Intent intent = new Intent(MainActivity.this, EditToDoItemActivity.class);
+
         String toAddString = addItemEditText.getText().toString();
         if (toAddString != null && toAddString.length() > 0) {
             itemsAdapter.add(toAddString); // Add text to list view adapter
             addItemEditText.setText("");
-            //saveItemsToFile();
             saveItemsToDatabase();
         }
-    }
+
+        intent.putExtra("item", toAddString);
+        startActivity(intent);
+
+        }
 
     private void setupListViewListener() {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -87,12 +94,11 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(R.string.dialog_delete_title)
                         .setMessage(R.string.dialog_delete_msg)
-                        .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 items.remove(position); // Remove item from the ArrayList
                                 itemsAdapter.notifyDataSetChanged(); // Notify listView adapter to update the list
 
-                                //saveItemsToFile();
                                 saveItemsToDatabase();
                             }
                         })
@@ -132,6 +138,21 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                /*Will handle checkbox  function later*/
+//                boolean isChecked=listView.isItemChecked(position);
+//                System.out.println(position);
+//                if (isChecked){
+//                    return;
+//                }
+
+                //CheckBox checkBox=view.findViewById(android.R.id.text1);
+                /*
+                * Temporatily setting so clicking on checkbox item does not do anything
+                * */
+//                if (checkBox !=null & checkBox.isPressed()){
+//                    return;
+//                }
                 String updateItem = (String) itemsAdapter.getItem(position);
                 Log.i("MainActivity", "Clicked item " + position + ": " + updateItem);
 
