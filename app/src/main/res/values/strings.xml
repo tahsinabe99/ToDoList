@@ -7,4 +7,10 @@
     <string name="edit">Edit</string>
     <string name="dialog_cancel_title">Cancel Changes</string>
     <string name="dialog_cancel_msg">Are you sure uou want to cancel this edit?</string>
+    <string name="spinner_prompt">Select an option</string>
+    <string-array name="type">
+        <item>class</item>
+        <item>exam</item>
+        <item>assignment</item>
+    </string-array>>
 </resources>

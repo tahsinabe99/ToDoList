@@ -21,6 +21,17 @@
         <requestFocus />
     </EditText>
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:prompt="@string/spinner_prompt"
+        android:layout_toEndOf="@+id/etEditItem"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:spinnerMode="dropdown"
+        />
+
     <Button
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
@@ -41,6 +52,21 @@
         android:onClick="onCancel"
         android:text="Cancel" />
 
+    <Button
+        android:id="@+id/datePickerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSave"
+        android:layout_marginTop="25dp"
+        android:text="Deadline Date" />
+
+    <Button
+        android:id="@+id/timePickerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnCancel"
+        android:layout_toEndOf="@+id/datePickerButton"
+        android:layout_marginTop="25dp"
+        android:text="Deadline Time" />
+
 </RelativeLayout>
-
-
