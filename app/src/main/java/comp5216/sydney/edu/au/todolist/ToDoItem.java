@@ -4,6 +4,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
+
+import java.util.Date;
+
 
 @Entity(tableName = "todolist")
 public class ToDoItem {
@@ -15,8 +20,12 @@ public class ToDoItem {
     @ColumnInfo(name = "toDoItemName")
     private String toDoItemName;
 
-    public ToDoItem(String toDoItemName){
+    @ColumnInfo(name="toDoItemDeadline")
+    private String deadline;
+
+    public ToDoItem(String toDoItemName, String deadline){
         this.toDoItemName = toDoItemName;
+        this.deadline=deadline;
     }
 
     public int getToDoItemID() {
@@ -33,5 +42,13 @@ public class ToDoItem {
 
     public void setToDoItemName(String toDoItemName) {
         this.toDoItemName = toDoItemName;
+    }
+
+    public String getToDoItemDeadline() {
+        return deadline;
+    }
+
+    public void setToDoItemDeadline(String toDoItemNameDeadline) {
+        this.deadline = deadline;
     }
 }

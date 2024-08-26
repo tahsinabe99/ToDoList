@@ -47,14 +47,6 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.lstView);
         addItemEditText = (EditText) findViewById(R.id.txtNewItem);
 
-        // Create an ArrayList of String
-        //items = new ArrayList<String>();
-        //items.add("item one");
-        //items.add("item two");
-
-        // Must call it before creating the adapter, because it references the right item list
-        //readItemsFromFile();
-
         // Create an instance of ToDoItemDB and ToDoItemDao
         db = ToDoItemDB.getDatabase(this.getApplication().getApplicationContext());
         toDoItemDao = db.toDoItemDao();
@@ -83,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
         intent.putExtra("item", toAddString);
         startActivity(intent);
-
         }
 
     private void setupListViewListener() {
@@ -139,20 +130,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                /*Will handle checkbox  function later*/
-//                boolean isChecked=listView.isItemChecked(position);
-//                System.out.println(position);
-//                if (isChecked){
-//                    return;
-//                }
-
-                //CheckBox checkBox=view.findViewById(android.R.id.text1);
-                /*
-                * Temporatily setting so clicking on checkbox item does not do anything
-                * */
-//                if (checkBox !=null & checkBox.isPressed()){
-//                    return;
-//                }
                 String updateItem = (String) itemsAdapter.getItem(position);
                 Log.i("MainActivity", "Clicked item " + position + ": " + updateItem);
 
@@ -168,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void readItemsFromFile(){
