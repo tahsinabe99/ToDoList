@@ -60,7 +60,6 @@ public class EditToDoItemActivity extends AppCompatActivity
 		//populating Date picket
 		c=Calendar.getInstance();
 		datePickerButton=findViewById(R.id.datePickerButton);
-		timePickerButton=findViewById(R.id.timePickerButton);
 		setDeadline();
 	}
 
@@ -108,7 +107,10 @@ public class EditToDoItemActivity extends AppCompatActivity
 				datePickerDialog.show();// shows the dialogue
 			}
 		});
+
 	}
+
+
 
 
 	public void onSubmit(View v) {
