@@ -61,12 +61,11 @@ public class EditToDoItemActivity extends AppCompatActivity
 		c=Calendar.getInstance();
 		datePickerButton=findViewById(R.id.datePickerButton);
 		timePickerButton=findViewById(R.id.timePickerButton);
-		setDateDeadline();
-		setTimeDeadline();
+		setDeadline();
 	}
 
 
-	private void setDateDeadline(){
+	private void setDeadline(){
 		datePickerButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -74,49 +73,39 @@ public class EditToDoItemActivity extends AppCompatActivity
 				int year=c.get(Calendar.YEAR);
 				int month=c.get(Calendar.MONTH);
 				int day= c.get(Calendar.DAY_OF_MONTH);
+				int hour= c.get(Calendar.HOUR_OF_DAY);
+				int minute=c.get(Calendar.MINUTE);
 
 				DatePickerDialog datePickerDialog=new DatePickerDialog(EditToDoItemActivity.this/*Context where dialog appears*/,
 						new DatePickerDialog.OnDateSetListener() {
 							@Override
 							public void onDateSet(DatePicker datePicker, int yearNum, int monthNum, int dayNum) {
 
+								String dateDeadline=yearNum+":"+monthNum+":"+dayNum;
 								Toast.makeText(EditToDoItemActivity.this,
-										"Date:"+dayNum, Toast.LENGTH_SHORT).show();
+										dateDeadline, Toast.LENGTH_SHORT).show();
 								//save data
-								String date=yearNum+":"+monthNum+":"+dayNum;
-								saveDate(date);
+								saveDate(dateDeadline);
 							}
 						}, year, month, day);
-				datePickerDialog.show();// shows the dialogue
-			}
-		});
 
-	}
-
-	private void setTimeDeadline(){
-		timePickerButton.setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View v){
-				int hour= c.get(Calendar.HOUR_OF_DAY);
-				int minute=c.get(Calendar.MINUTE);
 
 				//Making TimePicker Dialogue
-				TimePickerDialog timePickerDialog=new TimePickerDialog(EditToDoItemActivity.this,
-						new TimePickerDialog.OnTimeSetListener() {
-							@Override
-							public void onTimeSet(TimePicker timePicker, int setHour, int setMinute) {
+					TimePickerDialog timePickerDialog=new TimePickerDialog(EditToDoItemActivity.this,
+							new TimePickerDialog.OnTimeSetListener() {
+								@Override
+								public void onTimeSet(TimePicker timePicker, int setHour, int setMinute) {
 
-								Toast.makeText(EditToDoItemActivity.this,
-										"Selected Time:"+ setHour+ ":"+String.format("%02d", minute),
-										Toast.LENGTH_SHORT).show();
-								//save data
-								String time="T"+setHour+":"+setMinute+":"+"00:00Z";
-								savetime(time);
-
-
-							}
-						}, hour, minute, false);
-				timePickerDialog.show();
+									Toast.makeText(EditToDoItemActivity.this,
+											"Selected Time:"+ setHour+ ":"+String.format("%02d", minute),
+											Toast.LENGTH_SHORT).show();
+									//save data
+									String time="T"+setHour+":"+setMinute+":"+"00:00Z";
+									savetime(time);
+								}
+							}, hour, minute, false);
+					timePickerDialog.show();
+				datePickerDialog.show();// shows the dialogue
 			}
 		});
 	}

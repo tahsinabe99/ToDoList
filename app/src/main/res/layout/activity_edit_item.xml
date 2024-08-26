@@ -58,15 +58,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnSave"
         android:layout_marginTop="25dp"
-        android:text="Deadline Date" />
+        android:text="Set Deadline" />
 
-    <Button
-        android:id="@+id/timePickerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnCancel"
-        android:layout_toEndOf="@+id/datePickerButton"
-        android:layout_marginTop="25dp"
-        android:text="Deadline Time" />
+<!--    <Button-->
+<!--        android:id="@+id/timePickerButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/btnCancel"-->
+<!--        android:layout_toEndOf="@+id/datePickerButton"-->
+<!--        android:layout_marginTop="25dp"-->
+<!--        android:text="Deadline Time" />-->
 
 </RelativeLayout>
