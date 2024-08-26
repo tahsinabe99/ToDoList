@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -28,11 +29,11 @@ public class EditToDoItemActivity extends AppCompatActivity
 	EditText etItem;
 	Spinner spinner;
 	Button datePickerButton;
-	Button timePickerButton;
 	Calendar c;
 	String dateTime;
 	String date;
 	String time;
+	String itemType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class EditToDoItemActivity extends AppCompatActivity
 		c=Calendar.getInstance();
 		datePickerButton=findViewById(R.id.datePickerButton);
 		setDeadline();
+		selectItemType();
 	}
 
 
@@ -123,6 +125,7 @@ public class EditToDoItemActivity extends AppCompatActivity
 		data.putExtra("item", etItem.getText().toString());
 		data.putExtra("position", position);
 		data.putExtra("deadline", dateTime);
+		data.putExtra("type", itemType);
 
 		// Activity finishes OK, return the data
 		setResult(RESULT_OK, data); // Set result code and bundle data for response
@@ -148,6 +151,21 @@ public class EditToDoItemActivity extends AppCompatActivity
 				});
 
 		builder.create().show();
+
+	}
+
+	void selectItemType(){
+		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				itemType = parentView.getItemAtPosition(position).toString(); // Get selected item
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+				itemType="class";
+			}
+		});
 
 	}
 

@@ -9,16 +9,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ToDoItemAdapter extends ArrayAdapter<Item> {
+public class ToDoItemAdapter extends ArrayAdapter<ToDoItem> {
 
-    public ToDoItemAdapter(Context context, ArrayList<Item> items) {
+    public ToDoItemAdapter(Context context, ArrayList<ToDoItem> items) {
         super(context, 0, items);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Item item = getItem(position);
+        ToDoItem item = getItem(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
@@ -31,7 +31,7 @@ public class ToDoItemAdapter extends ArrayAdapter<Item> {
         TextView tvType = convertView.findViewById(R.id.tvItemType);
 
         // Populate the data into the template view using the data object
-        tvName.setText(item.getName());
+        tvName.setText(item.getToDoItemName());
         tvDeadline.setText(item.getDeadline());
         tvType.setText(item.getType());
 
