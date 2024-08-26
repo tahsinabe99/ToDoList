@@ -26,11 +26,11 @@ public class ToDoItem {
         this.toDoItemName = toDoItemName;
     }
 
-    public ToDoItem(String toDoItemName, String type, String deadline){
-        this.toDoItemName = toDoItemName;
-        this.type=type;
-        this.deadline=deadline;
-    }
+//    public ToDoItem(String toDoItemName, String type, String deadline){
+//        this.toDoItemName = toDoItemName;
+//        this.type=type;
+//        this.deadline=deadline;
+//    }
 
     public int getToDoItemID() {
         return toDoItemID;
@@ -48,19 +48,19 @@ public class ToDoItem {
         this.toDoItemName = toDoItemName;
     }
 
-    public String getToDoItemType() {
+    public String getType() {
         return this.type;
     }
 
-    public void setToDoItemType(String type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public void setToDoItemDeadline(String deadline) {
+    public void setDeadline(String deadline) {
          this.deadline=deadline;
     }
 
-    public String getToDoItemDeadline() {
+    public String getDeadline() {
         return this.deadline;
     }
 
