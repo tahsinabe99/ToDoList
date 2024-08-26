@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     EditText addItemEditText;
     ToDoItemDB db;
     ToDoItemDao toDoItemDao;
+    private ActivityResultLauncher<Intent> mLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,30 @@ public class MainActivity extends AppCompatActivity {
 
         // Use "activity_main.xml" as the layout
         setContentView(R.layout.activity_main);
+        mLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        // Extract name value from result extras
+                        String editedItem = result.getData().getExtras().getString("item");
+                        int position = result.getData().getIntExtra("position", -1);
+
+                        if (position != -1 && editedItem != null) {
+                            items.set(position, editedItem);
+                            Log.i("Updated item in list", editedItem + ", position: " + position);
+
+                            // Show a toast for the updated item
+                            Toast.makeText(getApplicationContext(), "Updated: " + editedItem, Toast.LENGTH_SHORT).show();
+
+                            // Notify adapter of changes
+                            itemsAdapter.notifyDataSetChanged();
+
+                            // Save updated list to the database
+                            saveItemsToDatabase();
+                        }
+                    }
+                }
+        );
 
         // Reference the "listView" variable to the id "lstView" in the layout
         listView = (ListView) findViewById(R.id.lstView);
@@ -72,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void onAddItemClick( View view) {
 
+
+
         Intent intent = new Intent(MainActivity.this, EditToDoItemActivity.class);
 
         String toAddString = addItemEditText.getText().toString();
@@ -80,10 +107,14 @@ public class MainActivity extends AppCompatActivity {
             addItemEditText.setText("");
             saveItemsToDatabase();
         }
+        int newPosition= items.size()-1;
+        addItemEditText.setText("");
+        saveItemsToDatabase();
 
         intent.putExtra("item", toAddString);
-        startActivity(intent);
+        intent.putExtra("position", newPosition);
 
+        mLauncher.launch(intent);
         }
 
     private void setupListViewListener() {
