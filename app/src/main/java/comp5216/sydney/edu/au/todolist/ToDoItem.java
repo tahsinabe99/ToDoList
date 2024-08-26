@@ -15,8 +15,21 @@ public class ToDoItem {
     @ColumnInfo(name = "toDoItemName")
     private String toDoItemName;
 
+    @ColumnInfo(name = "deadline")
+    private String deadline;
+
+    @ColumnInfo(name = "type")
+    private String type;
+
+
     public ToDoItem(String toDoItemName){
         this.toDoItemName = toDoItemName;
+    }
+
+    public ToDoItem(String toDoItemName, String type, String deadline){
+        this.toDoItemName = toDoItemName;
+        this.type=type;
+        this.deadline=deadline;
     }
 
     public int getToDoItemID() {
@@ -34,4 +47,22 @@ public class ToDoItem {
     public void setToDoItemName(String toDoItemName) {
         this.toDoItemName = toDoItemName;
     }
+
+    public String getToDoItemType() {
+        return this.type;
+    }
+
+    public void setToDoItemType(String type) {
+        this.type = type;
+    }
+
+    public void setToDoItemDeadline(String deadline) {
+         this.deadline=deadline;
+    }
+
+    public String getToDoItemDeadline() {
+        return this.deadline;
+    }
+
+
 }
