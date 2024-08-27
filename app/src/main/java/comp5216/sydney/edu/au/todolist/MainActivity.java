@@ -19,8 +19,15 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 import org.apache.commons.io.FileUtils;
@@ -31,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     // Define variables
     ListView listView;
     ArrayList<ToDoItem> items;
-    ArrayAdapter<ToDoItem> itemsAdapter;
     EditText addItemEditText;
     ToDoItemDB db;
     ToDoItemDao toDoItemDao;
@@ -60,12 +66,14 @@ public class MainActivity extends AppCompatActivity {
                             newItem.setDeadline(editedItemDeadline);
                             newItem.setType(editedItemType);
                             items.set(position, newItem);
+
                             Log.i("Updated item in list", editedItem + ", position: " + position);
 
                             // Show a toast for the updated item
                             Toast.makeText(getApplicationContext(), "Updated: " + editedItem, Toast.LENGTH_SHORT).show();
 
                             // Notify adapter of changes
+                            sortItem();
                             itemAdapter.notifyDataSetChanged();
 
                             // Save updated list to the database
@@ -92,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Setup listView listeners
         setupListViewListener();
+        sortItem();
     }
 
     public void onAddItemClick( View view) {
@@ -128,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 items.remove(position); // Remove item from the ArrayList
+                                sortItem();
                                 itemAdapter.notifyDataSetChanged(); // Notify listView adapter to update the list
 
                                 saveItemsToDatabase();
@@ -139,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                                 // Nothing happens
                             }
                         });
-
+                sortItem();
                 builder.create().show();
                 return true;
             }
@@ -293,4 +303,25 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+    private void sortItem(){
+        //if (items.size()>1){
+        SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.getDefault());
+            Collections.sort(items, (item1, item2)->{
+                try{
+                    Date date1=formatter.parse(item1.getDeadline());
+                    Date date2=formatter.parse(item2.getDeadline());
+                    return date1.compareTo(date2);
+                }catch (ParseException e){
+                    Log.i("Parsing Problem", e.toString());
+                    e.printStackTrace();
+                    return 0;
+                }
+            });
+
+        //}
+    }
+
+
+
 }

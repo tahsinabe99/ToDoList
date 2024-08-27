@@ -83,7 +83,7 @@ public class EditToDoItemActivity extends AppCompatActivity
 							@Override
 							public void onDateSet(DatePicker datePicker, int yearNum, int monthNum, int dayNum) {
 
-								String dateDeadline=yearNum+":"+monthNum+":"+dayNum;
+								String dateDeadline = String.format("%04d-%02d-%02d",yearNum,monthNum + 1,dayNum);
 								Toast.makeText(EditToDoItemActivity.this,
 										dateDeadline, Toast.LENGTH_SHORT).show();
 								//save data
@@ -103,7 +103,7 @@ public class EditToDoItemActivity extends AppCompatActivity
 											"Selected Time:"+ setHour+ ":"+String.format("%02d", minute),
 											Toast.LENGTH_SHORT).show();
 									//save data
-									String time="T"+setHour+":"+setMinute+":"+"00:00Z";
+									String time = String.format("%02d:%02d:%02d", setHour, setMinute, 00);
 									savetime(time);
 									Log.d("time", time);
 								}
@@ -181,8 +181,9 @@ public class EditToDoItemActivity extends AppCompatActivity
 	private void savetime(String time){
 		this.time=time;
 	}
+
 	private void formatDeadline(){
-		this.dateTime=this.date+this.time;
+		this.dateTime=String.format("%sT%sZ", this.date, this.time);
 	}
 
 
