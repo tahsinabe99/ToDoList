@@ -25,6 +25,7 @@ public class ToDoItemAdapter extends ArrayAdapter<ToDoItem> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.todo_item, parent, false);
         }
 
+
         // Lookup view for data population
         TextView tvName = convertView.findViewById(R.id.tvItemName);
         TextView tvDeadline = convertView.findViewById(R.id.tvItemDeadline);

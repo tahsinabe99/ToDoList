@@ -113,8 +113,6 @@ public class EditToDoItemActivity extends AppCompatActivity
 	}
 
 
-
-
 	public void onSubmit(View v) {
 		etItem = (EditText) findViewById(R.id.etEditItem);
 
@@ -129,6 +127,7 @@ public class EditToDoItemActivity extends AppCompatActivity
 
 		// Activity finishes OK, return the data
 		setResult(RESULT_OK, data); // Set result code and bundle data for response
+
 		finish(); // Close the activity, pass data to parent
 	}
 

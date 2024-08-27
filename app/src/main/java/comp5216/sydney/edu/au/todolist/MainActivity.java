@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("position", newPosition);
 
         mLauncher.launch(intent);
+
         }
 
     private void setupListViewListener() {
@@ -257,6 +258,8 @@ public class MainActivity extends AppCompatActivity {
         }
         catch(Exception ex) {
             Log.e("readItemsFromDatabase", ex.getStackTrace().toString());
+            Log.e("readItemsToDatabase", Log.getStackTraceString(ex));
+
         }
     }
 
@@ -283,6 +286,8 @@ public class MainActivity extends AppCompatActivity {
         }
         catch(Exception ex) {
             Log.e("saveItemsToDatabase", ex.getStackTrace().toString());
+            Log.e("saveItemsToDatabase", Log.getStackTraceString(ex));
+
         }
     }
 }
