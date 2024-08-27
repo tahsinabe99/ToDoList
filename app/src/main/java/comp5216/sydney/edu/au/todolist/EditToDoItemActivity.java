@@ -1,6 +1,5 @@
 package comp5216.sydney.edu.au.todolist;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;

@@ -11,26 +11,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
-
-import org.apache.commons.io.FileUtils;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        items=new ArrayList<>();
+        items = new ArrayList<>();
         // Use "activity_main.xml" as the layout
         setContentView(R.layout.activity_main);
         mLauncher = registerForActivityResult(
@@ -62,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         int position = result.getData().getIntExtra("position", -1);
                         Log.d("Position", String.format("%d", position));
                         if (position != -1 && editedItem != null) {
-                            ToDoItem newItem=new ToDoItem(editedItem);
+                            ToDoItem newItem = new ToDoItem(editedItem);
                             newItem.setDeadline(editedItemDeadline);
                             newItem.setType(editedItemType);
                             items.set(position, newItem);
@@ -94,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create an adapter for the list view using Android's built-in item layout
         //itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, items);
-        itemAdapter=new ToDoItemAdapter(this, items);
+        itemAdapter = new ToDoItemAdapter(this, items);
         // Connect the listView and the adapter
         listView.setAdapter(itemAdapter);
         checkAndUpdateOverdueItems();
@@ -103,18 +97,18 @@ public class MainActivity extends AppCompatActivity {
         setupListViewListener();
     }
 
-    public void onAddItemClick( View view) {
+    public void onAddItemClick(View view) {
 
         Intent intent = new Intent(MainActivity.this, EditToDoItemActivity.class);
 
         String toAddString = addItemEditText.getText().toString();
         if (toAddString != null && toAddString.length() > 0) {
-            ToDoItem newItem=new ToDoItem(toAddString);
+            ToDoItem newItem = new ToDoItem(toAddString);
             items.add(newItem); // Add text to list view adapter
 //            addItemEditText.setText("");
 //            saveItemsToDatabase();
         }
-        int newPosition= items.size()-1;
+        int newPosition = items.size() - 1;
 
         addItemEditText.setText("");
         //saveItemsToDatabase();
@@ -124,12 +118,11 @@ public class MainActivity extends AppCompatActivity {
 
         mLauncher.launch(intent);
 
-        }
+    }
 
     private void setupListViewListener() {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long rowId)
-            {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long rowId) {
                 Log.i("MainActivity", "Long Clicked item " + position);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(R.string.dialog_delete_title)
@@ -189,8 +182,8 @@ public class MainActivity extends AppCompatActivity {
 
                 //CheckBox checkBox=view.findViewById(android.R.id.text1);
                 /*
-                * Temporatily setting so clicking on checkbox item does not do anything
-                * */
+                 * Temporatily setting so clicking on checkbox item does not do anything
+                 * */
 //                if (checkBox !=null & checkBox.isPressed()){
 //                    return;
 //                }
@@ -245,8 +238,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
-    private void readItemsFromDatabase()
-    {
+    private void readItemsFromDatabase() {
         //Use asynchronous task to run query on the background and wait for result
         try {
             // Run a task specified by a Runnable Object asynchronously.
@@ -267,16 +259,14 @@ public class MainActivity extends AppCompatActivity {
             });
             // Block and wait for the future to complete
             future.get();
-        }
-        catch(Exception ex) {
+        } catch (Exception ex) {
             Log.e("readItemsFromDatabase", ex.getStackTrace().toString());
             Log.e("readItemsToDatabase", Log.getStackTraceString(ex));
 
         }
     }
 
-    private void saveItemsToDatabase()
-    {
+    private void saveItemsToDatabase() {
         //Use asynchronous task to run query on the background to avoid locking UI
         try {
             // Run a task specified by a Runnable Object asynchronously.
@@ -296,8 +286,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Block and wait for the future to complete
             future.get();
-        }
-        catch(Exception ex) {
+        } catch (Exception ex) {
             Log.e("saveItemsToDatabase", ex.getStackTrace().toString());
             Log.e("saveItemsToDatabase", Log.getStackTraceString(ex));
 
@@ -305,14 +294,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkAndUpdateOverdueItems() {
-        long currentTime=System.currentTimeMillis();
-        SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.getDefault());
+        long currentTime = System.currentTimeMillis();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.getDefault());
 
-        for (ToDoItem item:items) {
+        for (ToDoItem item : items) {
             try {
-                Date deadlineDate=formatter.parse(item.getDeadline());
+                Date deadlineDate = formatter.parse(item.getDeadline());
 
-                if (deadlineDate !=null && deadlineDate.getTime()<currentTime) {
+                if (deadlineDate != null && deadlineDate.getTime() < currentTime) {
                     item.setDeadline("Overdue");  // Mark the deadline as overdue
                 }
 
