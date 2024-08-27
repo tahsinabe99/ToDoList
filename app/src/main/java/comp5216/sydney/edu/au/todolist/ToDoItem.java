@@ -21,9 +21,13 @@ public class ToDoItem {
     @ColumnInfo(name = "type")
     private String type;
 
+    @ColumnInfo(name = "isChecked")
+    private Boolean isChecked;
+
 
     public ToDoItem(String toDoItemName){
         this.toDoItemName = toDoItemName;
+        this.isChecked=false;
     }
 
 //    public ToDoItem(String toDoItemName, String type, String deadline){
@@ -62,6 +66,14 @@ public class ToDoItem {
 
     public String getDeadline() {
         return this.deadline;
+    }
+
+    public Boolean getIsChecked() {
+        return this.isChecked;
+    }
+
+    public void setIsChecked(Boolean isChecked) {
+        this.isChecked=isChecked;
     }
 
 

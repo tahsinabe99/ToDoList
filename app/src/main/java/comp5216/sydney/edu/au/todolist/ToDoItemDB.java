@@ -5,7 +5,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 //need to update version  when there is db schema
-@Database(entities = {ToDoItem.class}, version = 3, exportSchema = false)
+@Database(entities = {ToDoItem.class}, version = 4, exportSchema = false)
 public abstract class ToDoItemDB extends RoomDatabase {
     private static final String DATABASE_NAME = "todoitem_db";
     private static ToDoItemDB DBINSTANCE;
