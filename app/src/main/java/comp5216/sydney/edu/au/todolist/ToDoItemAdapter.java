@@ -98,6 +98,5 @@ public class ToDoItemAdapter extends ArrayAdapter<ToDoItem> {
 
     }
 
-
 }
 

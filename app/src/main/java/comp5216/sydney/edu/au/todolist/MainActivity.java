@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         itemAdapter=new ToDoItemAdapter(this, items);
         // Connect the listView and the adapter
         listView.setAdapter(itemAdapter);
+        checkAndUpdateOverdueItems();
 
         // Setup listView listeners
         setupListViewListener();
@@ -301,6 +302,26 @@ public class MainActivity extends AppCompatActivity {
             Log.e("saveItemsToDatabase", Log.getStackTraceString(ex));
 
         }
+    }
+
+    private void checkAndUpdateOverdueItems() {
+        long currentTime=System.currentTimeMillis();
+        SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.getDefault());
+
+        for (ToDoItem item:items) {
+            try {
+                Date deadlineDate=formatter.parse(item.getDeadline());
+
+                if (deadlineDate !=null && deadlineDate.getTime()<currentTime) {
+                    item.setDeadline("Overdue");  // Mark the deadline as overdue
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        itemAdapter.notifyDataSetChanged();  // Refresh the list after updating
     }
 
 //    private void sortItem(){
