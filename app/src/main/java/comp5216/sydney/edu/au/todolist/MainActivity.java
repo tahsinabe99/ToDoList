@@ -48,12 +48,13 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
+
                         // Extract name, type, deadline value from result extras
                         String editedItem = result.getData().getExtras().getString("item");
                         String editedItemType = result.getData().getExtras().getString("type");
                         String editedItemDeadline = result.getData().getExtras().getString("deadline");
                         int position = result.getData().getIntExtra("position", -1);
-
+                        Log.d("Position", String.format("%d", position));
                         if (position != -1 && editedItem != null) {
                             ToDoItem newItem=new ToDoItem(editedItem);
                             newItem.setDeadline(editedItemDeadline);
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Updated: " + editedItem, Toast.LENGTH_SHORT).show();
 
                             // Notify adapter of changes
-                            itemsAdapter.notifyDataSetChanged();
+                            itemAdapter.notifyDataSetChanged();
 
                             // Save updated list to the database
                             saveItemsToDatabase();
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         //itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, items);
         itemAdapter=new ToDoItemAdapter(this, items);
         // Connect the listView and the adapter
-        listView.setAdapter(itemsAdapter);
+        listView.setAdapter(itemAdapter);
 
         // Setup listView listeners
         setupListViewListener();
@@ -100,13 +101,14 @@ public class MainActivity extends AppCompatActivity {
         String toAddString = addItemEditText.getText().toString();
         if (toAddString != null && toAddString.length() > 0) {
             ToDoItem newItem=new ToDoItem(toAddString);
-//            itemsAdapter.add(newItem); // Add text to list view adapter
+            items.add(newItem); // Add text to list view adapter
 //            addItemEditText.setText("");
 //            saveItemsToDatabase();
         }
         int newPosition= items.size()-1;
+
         addItemEditText.setText("");
-        saveItemsToDatabase();
+        //saveItemsToDatabase();
 
         intent.putExtra("item", toAddString);
         intent.putExtra("position", newPosition);
@@ -126,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 items.remove(position); // Remove item from the ArrayList
-                                itemsAdapter.notifyDataSetChanged(); // Notify listView adapter to update the list
+                                itemAdapter.notifyDataSetChanged(); // Notify listView adapter to update the list
 
                                 saveItemsToDatabase();
                             }
@@ -183,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 //                    return;
 //                }
 
-                ToDoItem updateItem = (ToDoItem) itemsAdapter.getItem(position);
+                ToDoItem updateItem = (ToDoItem) itemAdapter.getItem(position);
                 Log.i("MainActivity", "Clicked item " + position + ": " + updateItem);
 
                 Intent intent = new Intent(MainActivity.this, EditToDoItemActivity.class);
@@ -194,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // bring up the second activity
                     mLauncher.launch(intent);
-                    itemsAdapter.notifyDataSetChanged();
+                    itemAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -278,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("SQLite saved item", todo.getToDoItemName());
                     }
                     System.out.println("I'll run in a separate thread than the main thread.");
+
                 }
             });
 

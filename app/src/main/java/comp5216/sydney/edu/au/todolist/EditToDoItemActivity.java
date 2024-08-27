@@ -57,12 +57,13 @@ public class EditToDoItemActivity extends AppCompatActivity
 				android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 		spinner.setAdapter(adapter);
+		selectItemType();
 
 		//populating Date picket
 		c=Calendar.getInstance();
 		datePickerButton=findViewById(R.id.datePickerButton);
 		setDeadline();
-		selectItemType();
+
 	}
 
 
@@ -87,6 +88,7 @@ public class EditToDoItemActivity extends AppCompatActivity
 										dateDeadline, Toast.LENGTH_SHORT).show();
 								//save data
 								saveDate(dateDeadline);
+								Log.d("Date", dateDeadline);
 							}
 						}, year, month, day);
 
@@ -103,6 +105,7 @@ public class EditToDoItemActivity extends AppCompatActivity
 									//save data
 									String time="T"+setHour+":"+setMinute+":"+"00:00Z";
 									savetime(time);
+									Log.d("time", time);
 								}
 							}, hour, minute, false);
 					timePickerDialog.show();
@@ -110,12 +113,13 @@ public class EditToDoItemActivity extends AppCompatActivity
 			}
 		});
 
+
 	}
 
 
 	public void onSubmit(View v) {
 		etItem = (EditText) findViewById(R.id.etEditItem);
-
+		formatDeadline();
 		// Prepare data intent for sending it back
 		Intent data = new Intent();
 
@@ -124,10 +128,13 @@ public class EditToDoItemActivity extends AppCompatActivity
 		data.putExtra("position", position);
 		data.putExtra("deadline", dateTime);
 		data.putExtra("type", itemType);
-
+		Log.d("ItemName:", etItem.getText().toString());
+		Log.d("Date", this.date);
+		Log.d("time", this.time);
+		Log.d(" deadline:",dateTime );
+		Log.d(" type", itemType);
 		// Activity finishes OK, return the data
 		setResult(RESULT_OK, data); // Set result code and bundle data for response
-
 		finish(); // Close the activity, pass data to parent
 	}
 
